@@ -1,3 +1,10 @@
+# Author: Abhishek Paul
+# Plaform: Upgrad
+# University : Liverpool John Moores University, United Kingdom.
+# Course: Masters in Airtificial Intelligenc and Machine Learning
+# Student No: 1176066
+# Dissertation Topic: Using Artificial Intelligence to Label Free-Text Operative and Ultrasound Reports for Grading Paediatric Appendicitis
+
 # Paediatric Appendicitis AI System
 
 An artificial intelligence system for automatically grading paediatric appendicitis severity from free-text operative and ultrasound reports.
@@ -38,3 +45,26 @@ python -m spacy download en_core_web_sm
 ```
 pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_sm-0.5.1.tar.gz
 ```
+
+## Execution
+
+1. Extract Data (optional):
+```
+python3 main.py --stage extract
+```
+
+2. Run Pipeline:
+```
+python3 main.py
+```
+
+## Results
+
+```
+Results can be found under \results folder
+
+The test and Train Data would be present under data/processed directory.
+```
+
+## NOTE
+- **The Labelled data would be present inside Test and Train csv files and would be presnent at the last column caled as label_encoded
