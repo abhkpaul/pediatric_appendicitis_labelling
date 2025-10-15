@@ -248,13 +248,13 @@ if __name__ == "__main__":
     # Set up an argument parser to allow running specific pipeline stages
     parser = argparse.ArgumentParser(description='Paediatric Appendicitis AI Pipeline (CPU-only, single-threaded)')
     parser.add_argument('--stage', type=str,
-                        choices=['all', 'preprocessing', 'features', 'training', 'evaluation', 'create_sample', 'chained_eval'],
+                        choices=['all', 'preprocessing', 'features', 'training', 'evaluation', 'extract', 'chained_eval'],
                         default='all', help='Pipeline stage to run')
 
     args = parser.parse_args()
 
     # Execute the chosen stage
-    if args.stage == 'create_sample':
+    if args.stage == 'extract':
         data_extraction.main()
     elif args.stage == 'all':
         run_full_pipeline()
