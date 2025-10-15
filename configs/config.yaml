@@ -1,0 +1,75 @@
+data_extraction:
+  us_output_csv: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/us_reports.csv"
+  or_output_csv: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/or_reports.csv"
+  consolidated_output_csv: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/merged_data.csv"
+  git_repo_url: "https://github.com/asherboucher87/data_orur_pediatric_appendicitis.git"
+
+  extraction:
+    use_pdfplumber: true
+    fallback_to_pypdf2: true
+data:
+  raw_path: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/"
+  processed_path: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/"
+  features_path: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/features/"
+
+  file_names:
+    us_reports: "us_reports.csv"
+    or_reports: "or_reports.csv"
+    merged_data: "merged_data.csv"
+
+  text_columns:
+    us: "us_report_text"
+    or: "or_report_text"
+    merged: "report_text"
+
+  target_column: "severity_grade"
+
+preprocessing:
+  max_sequence_length: 512
+  test_size: 0.15
+  val_size: 0.15
+  random_state: 42
+
+features:
+  tfidf:
+    max_features: 3000  # Reduced for CPU efficiency
+    ngram_range: [1, 2]
+
+models:
+  baseline:
+    logistic_regression:
+      C: 1.0
+      max_iter: 1000
+      solver: 'liblinear'  # CPU efficient
+
+    random_forest:
+      n_estimators: 100
+      max_depth: 20
+      n_jobs: 1  # Single-threaded
+
+    svm:
+      C: 1.0
+      kernel: "linear"
+
+    xgboost:
+      n_estimators: 100
+      max_depth: 6
+      learning_rate: 0.1
+      n_jobs: 1  # Single-threaded
+
+    lightgbm:
+      n_estimators: 100
+      max_depth: -1
+      learning_rate: 0.1
+      n_jobs: 1  # Single-threaded
+
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1"]
+  comparison_methods: ["manual", "chatgpt"]
+
+api:
+  openai:
+    model: "gpt-4"
+    temperature: 0.1
+    max_tokens: 100
+    api_key: ""
