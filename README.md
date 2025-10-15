@@ -21,6 +21,9 @@ This research develops and evaluates an AI system to automate the labelling and 
 - **Comprehensive Evaluation**: Comparison against manual extraction and ChatGPT-4
 - **Reproducible Pipeline**: Modular, configurable, and well-documented codebase
 
+## NOTE
+- **The Labelled data would be present inside Test and Train csv files and would be presnent at the last column caled as label_encoded
+
 ## Installation
 
 1. Clone the repository:
