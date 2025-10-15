@@ -1,16 +1,16 @@
 data_extraction:
-  us_output_csv: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/us_reports.csv"
-  or_output_csv: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/or_reports.csv"
-  consolidated_output_csv: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/merged_data.csv"
+  us_output_csv: "data/processed/us_reports.csv"
+  or_output_csv: "data/processed/or_reports.csv"
+  consolidated_output_csv: "data/processed/merged_data.csv"
   git_repo_url: "https://github.com/asherboucher87/data_orur_pediatric_appendicitis.git"
 
   extraction:
     use_pdfplumber: true
     fallback_to_pypdf2: true
 data:
-  raw_path: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/"
-  processed_path: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/"
-  features_path: "/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/features/"
+  raw_path: "data/processed/"
+  processed_path: "data/processed/"
+  features_path: "data/features/"
 
   file_names:
     us_reports: "us_reports.csv"

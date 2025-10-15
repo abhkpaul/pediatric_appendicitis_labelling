@@ -6,8 +6,8 @@ import logging
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import RandomizedSearchCV
+from sklearn.metrics import accuracy_score
 import xgboost as xgb
 import lightgbm as lgb
 from scipy.sparse import issparse
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class ModelTrainer:
-    def __init__(self, config_path="/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/configs/config.yaml"):
+    def __init__(self, config_path="configs/config.yaml"):
         with open(config_path, 'r') as file:
             self.config = yaml.safe_load(file)
 
@@ -56,7 +56,6 @@ class ModelTrainer:
         """Train traditional machine learning models (CPU optimized, single-threaded)."""
         baseline_config = self.config['models']['baseline']
 
-        # Convert to dense if sparse and small enough
         if issparse(X_train) and X_train.shape[1] < 10000:
             X_train = X_train.toarray()
             if X_val is not None and issparse(X_val):
@@ -112,7 +111,7 @@ class ModelTrainer:
             scoring='accuracy',
             n_jobs=-1,
             verbose=1,
-            n_iter=10,  # Limit iterations for CPU efficiency
+            n_iter=10,
             random_state=42
         )
 
@@ -181,12 +180,12 @@ def train_cpu_pipeline():
     X_train = trainer.load_features(['X_train_combined'])[0]
 
     # Load labels
-    train_df = pd.read_csv("/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/train_data.csv")
+    train_df = pd.read_csv("data/processed/train_data.csv")
     y_train = train_df['label_encoded']
 
     # Load validation data if available
     try:
-        val_df = pd.read_csv("/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/val_data.csv")
+        val_df = pd.read_csv("data/processed/val_data.csv")
         X_val = trainer.load_features(['X_val_combined'])[0]
         y_val = val_df['label_encoded']
     except:

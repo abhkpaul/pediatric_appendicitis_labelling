@@ -6,7 +6,6 @@ from sklearn.preprocessing import OneHotEncoder
 import yaml
 import logging
 import joblib
-from tqdm import tqdm
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -40,11 +39,11 @@ class FeatureEngineer:
         try:
             import os
             os.mkdir(directory_name)
-            print(f"Directory '{directory_name}' created successfully.")
+            logger.info(f"Directory '{directory_name}' created successfully.")
         except FileExistsError:
-            print(f"Directory '{directory_name}' already exists.")
+            logger.info(f"Directory '{directory_name}' already exists.")
         except Exception as e:
-            print(f"An error occurred: {e}")
+            logger.info(f"An error occurred: {e}")
         joblib.dump(self.tfidf_vectorizer, "models/tfidf_vectorizer.pkl")
         X_test_tfidf = self.tfidf_vectorizer.transform(test_texts)
 

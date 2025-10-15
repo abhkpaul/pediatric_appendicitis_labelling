@@ -1,44 +1,53 @@
-#!/usr/bin/env python3
-"""
-Setup script for CPU-only environment.
-"""
+from setuptools import setup, find_packages
 
-import os
-import subprocess
-import sys
+# Setup script for the pediatric_appendicitis_labelling package.
+# This file is used by packaging tools like pip to install the project and its dependencies.
 
+setup(
+    # The name of the package
+    name='pediatric_appendicitis_labelling',
 
-def setup_environment():
-    print("Setting up CPU-only environment...")
+    # The version of the package
+    version='0.1.0',
 
-    # Create directories
-    directories = [
-        'data/raw',
-        'data/processed',
-        'data/features',
-        'models',
-        'results',
-        'configs',
-        'src',
-        'notebooks',
-        'scripts',
-        'tests'
-    ]
+    # A short description of the package
+    description='A project to label pediatric appendicitis cases from clinical notes.',
 
-    for directory in directories:
-        os.makedirs(directory, exist_ok=True)
-        print(f"Created directory: {directory}")
+    # The author of the package
+    author='Abhishek Paul',
 
-    # Install requirements
-    print("Installing requirements...")
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', 'requirements.txt'])
+    # The author's email address
+    author_email='abhk.paul@gmail.com',
 
-    # Download spaCy model
-    print("Downloading spaCy model...")
-    subprocess.check_call([sys.executable, '-m', 'spacy', 'download', 'en_core_web_sm'])
+    # Automatically find all packages in the project (i.e., directories with an __init__.py file)
+    packages=find_packages(),
 
-    print("✅ Environment setup completed!")
+    # List of dependencies required for this package to run
+    # These will be installed by pip when the package is installed.
+    install_requires=[
+        'pandas',
+        'numpy',
+        'scikit-learn',
+        'pyyaml',
+        'pdfplumber',
+        'pypdf2',
+        'xgboost',
+        'lightgbm',
+        'gitpython',
+        'spacy',
+        'openai',
+        'matplotlib',
+        'seaborn',
+        'tqdm'
+    ],
 
+    # Provides metadata about the package for package indexes
+    classifiers=[
+        'Programming Language :: Python :: 3',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+    ],
 
-if __name__ == "__main__":
-    setup_environment()
+    # Specifies the minimum required version of Python
+    python_requires='>=3.8',
+)

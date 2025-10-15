@@ -1,4 +1,3 @@
-# Only change the imports at the top to remove deep learning dependencies
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,13 +12,12 @@ from sklearn.metrics import cohen_kappa_score
 from openai import OpenAI
 
 
-# Rest of the code remains the same...
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 class ModelEvaluator:
-    def __init__(self, config_path="/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/configs/config.yaml"):
+    def __init__(self, config_path="configs/config.yaml"):
         with open(config_path, 'r') as file:
             self.config = yaml.safe_load(file)
 
@@ -30,11 +28,13 @@ class ModelEvaluator:
 
     def load_test_data(self):
         """Load test data and gold standard labels."""
-        test_df = pd.read_csv("/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/test_data.csv")
+
+        test_df = pd.read_csv("data/processed/test_data.csv")
 
         # Load manual extraction results if available
         try:
-            manual_results = pd.read_csv("/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/raw/adjudicated_gold_standard_labels.csv")
+
+            manual_results = pd.read_csv("data/raw/adjudicated_gold_standard_labels.csv")
         except FileNotFoundError:
             manual_results = None
             logger.warning("Manual extraction results not found")
@@ -190,7 +190,7 @@ class ModelEvaluator:
             predictions.append(prediction)
 
         # Map predictions to encoded labels
-        label_encoder = joblib.load("/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/processed/label_encoder.pkl")
+        label_encoder = joblib.load("data/processed/label_encoder.pkl")
 
         # Clean and map predictions
         # Clean and map predictions
@@ -294,8 +294,8 @@ class ModelEvaluator:
         print("\n=== FINAL COMPARISON TABLE ===")
         print(comparison_df.to_string(index=False))
         print(comparison_df.to_markdown(index=False))
-        comparison_df.to_csv('/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/results/method_comparison.csv', index=False)
-        comparison_df.to_latex('/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/results/method_comparison.tex', index=False)
+        comparison_df.to_csv('results/method_comparison.csv',index=False)
+        comparison_df.to_latex('results/method_comparison.tex', index=False)
         return comparison_df
 
     def plot_confusion_matrices(self, results_list, label_encoder):
@@ -321,7 +321,7 @@ class ModelEvaluator:
             axes[i].set_ylabel('Actual')
 
         plt.tight_layout()
-        plt.savefig('/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/results/confusion_matrices.png', dpi=300, bbox_inches='tight')
+        plt.savefig('results/confusion_matrices.png',dpi=300, bbox_inches='tight')
         plt.show()
 
     def save_evaluation_results(self, results_list, comparison_df):
@@ -343,8 +343,10 @@ class ModelEvaluator:
                 json.dump(json_results, f, indent=2)
 
         # Save comparison table
-        comparison_df.to_csv('/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/results/method_comparison.csv', index=False)
-        comparison_df.to_latex('/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/results/method_comparison.tex', index=False)
+        comparison_df.to_csv('results/method_comparison.csv',
+                             index=False)
+        comparison_df.to_latex(
+            'results/method_comparison.tex', index=False)
 
         logger.info("Evaluation results saved to 'results/' directory")
 
@@ -357,8 +359,9 @@ if __name__ == "__main__":
     test_df, manual_results = evaluator.load_test_data()
 
     # Load trained models
-    rf_model = joblib.load("/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/models/random_forest_model.pkl")
-    X_test_tfidf = np.load("/Users/abhk/Documents/Git/pediatric_appendicitis_labelling/data/features/X_test_tfidf.npy")
+
+    rf_model = joblib.load("models/random_forest_model.pkl")
+    X_test_tfidf = np.load("data/features/X_test_tfidf.npy")
 
     # Evaluate models
     rf_results = evaluator.evaluate_model(rf_model, X_test_tfidf, test_df['label_encoded'], "Random Forest")
