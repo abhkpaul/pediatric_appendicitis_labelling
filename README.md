@@ -22,7 +22,7 @@ This research develops and evaluates an AI system to automate the labelling and 
 - **Reproducible Pipeline**: Modular, configurable, and well-documented codebase
 
 ## NOTE
-- **The Labelled data would be present inside Test and Train csv files and would be presnent at the last column caled as label_encoded
+- **The Final Labelled data after running program would be present inside Test and Train csv files and would be presnent at the last column caled as label_encoded
 
 ## Installation
 
